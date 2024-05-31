@@ -1,0 +1,13 @@
+.wrapper {
+    height: 100vh;
+    padding: 12px 20px 12px 20px;
+}
+
+.etHeading {
+    font-family: Ubuntu;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 36.77px;
+    text-align: left;
+    color: white;
+}
