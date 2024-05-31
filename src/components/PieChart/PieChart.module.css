@@ -1,0 +1,37 @@
+.wrapper {
+}
+
+.legendContainer {
+    position: absolute;
+    right: 112px;
+    top: 290px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 8px;
+    color: var(--color-primary);
+    font-family: Open Sans;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16.34px;
+    text-align: left;
+    
+}
+
+.food {
+    width: 26px;
+    height: 8px;
+    background: #A000FF;
+}
+
+.entertainment {
+    width: 26px;
+    height: 8px;
+    background: #FF9304;
+}
+
+.travel {
+    width: 26px;
+    height: 8px;
+    background: #FDE006;
+}
