@@ -5,6 +5,8 @@ import { ReactComponent as DeleteIcon } from "../../assets/delete-icon.svg";
 import { ReactComponent as EditIcon } from "../../assets/edit-icon.svg";
 import { ReactComponent as MovieIcon } from "../../assets/movie-icon.svg";
 import { ReactComponent as AutoIcon } from "../../assets/auto-icon.svg";
+import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
+import { ReactComponent as RightArrow } from "../../assets/right-arrow.svg";
 
 function Transactions() {
     return (
@@ -65,6 +67,11 @@ function Transactions() {
                     </div>
                 </div>
                 <hr />
+            </div>
+            <div className={styles.pagination}>
+                <button className={`${styles.arrow} cursor-pointer`}><LeftArrow /></button>
+                <div className={styles.indexing}>1</div>
+                <button className={`${styles.arrow} cursor-pointer`}><RightArrow /></button>
             </div>
         </div>
     )

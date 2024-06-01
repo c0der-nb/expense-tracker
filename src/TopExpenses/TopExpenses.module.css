@@ -5,5 +5,36 @@
     background-color: var(--color-primary);
     box-shadow: 0px 4px 4px 0px #00000040;
     padding: 16px 8px 16px 8px;
-    
+    display: flex;
+    flex-direction: column;
+    row-gap: 5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.expense {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.expenseTitle {
+    font-family: Open Sans;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16.34px;
+    text-align: right;
+    width: 67.98px;
+}
+
+.barContainer {
+    height: 21.73px;
+    width: 304px;
+}
+
+.expenseBar {
+    height: 100%;
+    border-radius: 0px 20px 20px 0px;
+    background: #8784D2;
 }

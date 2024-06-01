@@ -1,6 +1,6 @@
 .wrapper {
     height: 100vh;
-    padding: 12px 20px 12px 20px;
+    padding: 12px 20px 0px 20px;
 }
 
 .etHeading {
@@ -38,4 +38,8 @@
     line-height: 32.17px;
     color: var(--color-primary);
     margin-bottom: 8px;
+}
+
+footer {
+    height: 10vh;
 }

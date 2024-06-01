@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Homepage.module.css';
 import Hero from '../../components/HeroSection/HeroSection';
 import Transactions from '../../components/Transactions/Transactions';
+import TopExpenses from '../../TopExpenses/TopExpenses';
 
 function Homepage() {
     return (
@@ -15,8 +16,10 @@ function Homepage() {
                 </div>
                 <div className={styles.topExpenses}>
                     <h4>Top Expenses</h4>
+                    <TopExpenses />
                 </div>
             </div>
+            <footer></footer>
         </div>
     )
 }

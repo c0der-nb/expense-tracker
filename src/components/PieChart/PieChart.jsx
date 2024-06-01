@@ -8,7 +8,7 @@ const tempData = [
     { name: "Group C", value: 300 }
 ];
 
-const COLORS = ["#FF8042", "#0088FE", "#FFBB28"];
+const COLORS = ["#FF9304", "#A000FF", "#FDE006"];
 const RADIAN = Math.PI/180;
 const renderCustomizedLabel = ({
     cx,

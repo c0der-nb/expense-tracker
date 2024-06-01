@@ -86,3 +86,32 @@
     box-shadow: 0px 4px 4px 0px #00000040;
     cursor: pointer;
 }
+
+.pagination {
+    margin-top: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 12px;
+}
+
+.arrow {
+    width: 37px;
+    height: 37px;
+    border-radius: 15px;
+    background: linear-gradient(0deg, #F1F1F1, #F1F1F1);
+    border: none;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.indexing {
+    width: 37px;
+    height: 37px;
+    border-radius: 5px;
+    background: #43967B;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-primary);
+}
