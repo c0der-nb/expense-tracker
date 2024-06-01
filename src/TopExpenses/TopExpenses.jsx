@@ -13,8 +13,7 @@ function TopExpenses({data}) {
                     <div className={styles.barContainer}>
                         <div style={{width: `${(val.expense/topExpense)*100}%`}} className={styles.expenseBar}></div>
                     </div>
-                </div>
-                ))
+                </div>))
             }
         </div>
     )
