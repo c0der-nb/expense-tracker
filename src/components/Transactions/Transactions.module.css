@@ -1,0 +1,88 @@
+.wrapper {
+    width: 46.14rem;
+    height: 21.56rem;
+    border: 1px solid #9B9B9B;
+    border-radius: 15px;
+    padding: 14px 8px 8px 16px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.wrapper hr {
+    width: 100%;
+    margin-top: 5px;
+    border: 1px solid #9B9B9B;
+}
+
+.lineItem {
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 8px;
+}
+
+.itemDetail {
+    padding: 0;
+}
+
+.itemDetail p:first-of-type {
+    font-family: Open Sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21.79px;
+    color: #000000;
+
+}
+
+.itemDetail p:last-of-type {
+    font-family: Open Sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21.79px;
+    color: #9B9B9B;
+}
+
+.priceButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.priceButtons p {
+    font-family: Open Sans;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 21.79px;
+    color: #F4BB4A;
+}
+
+.delete {
+    width: 37px;
+    height: 37px;
+    border-radius: 15px;
+    opacity: 0px;
+    background: #FF3E3E;
+    border: none;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    cursor: pointer;
+}
+
+.edit {
+    width: 37px;
+    height: 37px;
+    border-radius: 15px;
+    opacity: 0px;
+    background: #F4BB4A;
+    border: none;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    cursor: pointer;
+}

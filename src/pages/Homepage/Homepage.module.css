@@ -11,3 +11,31 @@
     text-align: left;
     color: white;
 }
+
+.main {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 2rem;
+}
+
+.transactions h4:first-of-type {
+    font-family: Ubuntu;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 32.17px;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+
+.topExpenses h4:first-of-type {
+    font-family: Ubuntu;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 32.17px;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}

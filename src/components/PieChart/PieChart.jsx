@@ -38,7 +38,7 @@ const renderCustomizedLabel = ({
 
 function PieChartComponent({data}) {
     return (
-        <div className={styles.wrapper}>
+        <div>
             <PieChart width={400} height={400}>
                 <Pie
                     data={tempData}
