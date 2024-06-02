@@ -6,7 +6,7 @@
     bottom: 0;
     background-color: rgba(255, 255, 255, 0.75);
     animation: animatetop;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
 }
 
 .modal {

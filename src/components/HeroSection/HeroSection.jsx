@@ -6,8 +6,8 @@ import PieChart from '../../components/PieChart/PieChart';
 function HeroSection({addModalStateHandler, balanceModalStateHandler}) {
     return (
         <div className={styles.wrapper}>
-            <Card type='income' addIncomeHandler={addModalStateHandler} />
-            <Card type='expense' addBalanceHandler={balanceModalStateHandler} />
+            <Card type='income' addBalanceHandler={balanceModalStateHandler}/>
+            <Card type='expense' addIncomeHandler={addModalStateHandler} />
             <PieChart />
         </div>
     )

@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactModal from "react-modal";
 import styles from "./AddBalanceModal.module.css";
 
 function AddBalanceModal({cancelHandler}) {
+    const [balanceInput, setBalanceInput] = useState("");
+    const addBalanceHandler = () => {
+        if (!balanceInput)
+            alert("Please enter valid amount")
+        else {
+            localStorage.setItem("WALLET_BALANCE", balanceInput);
+            cancelHandler();
+        }
+    }
+
     return (
         <div>
             <ReactModal 
@@ -13,8 +23,8 @@ function AddBalanceModal({cancelHandler}) {
             >
                 <p className={styles.modalHeading}>Add Balance</p>
                 <div className={styles.balanceFormContainer}>
-                    <input className={styles.balanceInput} type="text" placeholder="Income Amount" />
-                    <button className={`${styles.addButton} cursor-pointer`}>Add Balance</button>
+                    <input className={styles.balanceInput} type="number" placeholder="Income Amount" onChange={(e) => setBalanceInput(e.target.value)} />
+                    <button className={`${styles.addButton} cursor-pointer`} onClick={addBalanceHandler}>Add Balance</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </div>
             </ReactModal>

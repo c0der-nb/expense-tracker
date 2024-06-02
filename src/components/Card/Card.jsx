@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from "./Card.module.css";
 
-function Card({type, amount, addIncomeHandler, addBalanceHandler}) {
+function Card({type, amount, addBalanceHandler, addIncomeHandler}) {
     if (type === "income") {
         return (
             <div className={styles.wrapper}>
-                <p>Wallet Balance: <span className={styles.bSpan}>₹4500</span></p>
-                <button className={styles.incomeButton} onClick={() => addIncomeHandler(true)}>+ Add Income</button>
+                <p>Wallet Balance: <span className={styles.bSpan}>{`₹${localStorage.getItem("WALLET_BALANCE")}`}</span></p>
+                <button className={styles.incomeButton} onClick={() => addBalanceHandler(true)}>+ Add Income</button>
             </div>
         )
     }
@@ -14,7 +14,7 @@ function Card({type, amount, addIncomeHandler, addBalanceHandler}) {
         return (
             <div className={styles.wrapper}>
                 <p>Expenses: <span className={styles.eSpan}>₹500</span></p>
-                <button className={styles.expenseButton} onClick={() => addBalanceHandler(true)}>+ Add Expense</button>
+                <button className={styles.expenseButton} onClick={() => addIncomeHandler(true)}>+ Add Expense</button>
             </div>
         )
     }
