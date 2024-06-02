@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import styles from "./ExpenseModal.module.css";
-import ReactModal from "react-modal";
 
 function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHandler, cancelHandler}) {
     const [title, setTitle] = useState("");
@@ -42,13 +41,9 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
 
     if (type === 'add')
         return (
-            <div>
-                <ReactModal 
-                    isOpen
-                    contentLabel="Add Expense Modal"
-                    overlayClassName={styles.overlay}
+            <div className={styles.overlay}>
+                <div 
                     className={styles.modal}
-                    ariaHideApp={false}
                 >
                 <p className={styles.modalHeading}>Add Expenses</p>
                 <form onSubmit={addHandler} className={styles.expenseFormContainer}>
@@ -64,16 +59,13 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                     <button type="submit" className={`${styles.addButton} cursor-pointer`}>Add Expense</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </form>
-                </ReactModal>
+                </div>
             </div>
         )
     if (type === "edit")
         return (
-            <div>
-                <ReactModal 
-                    isOpen
-                    contentLabel="Edit Expense Modal"
-                    overlayClassName={styles.overlay}
+            <div className={styles.overlay}>
+                <div 
                     className={styles.modal}
                 >
                 <p className={styles.modalHeading}>Edit Expenses</p>
@@ -90,7 +82,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                     <button type="submit" className={`${styles.addButton} cursor-pointer`}>Update Expense</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </form>
-                </ReactModal>
+                </div>
             </div>
         )
 }

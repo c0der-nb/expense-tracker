@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactModal from "react-modal";
 import styles from "./AddBalanceModal.module.css";
 
 function AddBalanceModal({cancelHandler}) {
@@ -18,11 +17,8 @@ function AddBalanceModal({cancelHandler}) {
     }
 
     return (
-        <div>
-            <ReactModal 
-                isOpen
-                contentLabel="Add Balance Modal"
-                overlayClassName={styles.overlay}
+        <div className={styles.overlay}>
+            <div
                 className={styles.modal}
             >
                 <p className={styles.modalHeading}>Add Balance</p>
@@ -31,7 +27,7 @@ function AddBalanceModal({cancelHandler}) {
                     <button className={`${styles.addButton} cursor-pointer`} onClick={addBalanceHandler}>Add Balance</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </div>
-            </ReactModal>
+            </div>
         </div>
     )
 }
