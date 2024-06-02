@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import TextField from '@mui/material/TextField';
 import styles from "./AddBalanceModal.module.css";
 import { enqueueSnackbar } from "notistack";
 
@@ -24,7 +25,7 @@ function AddBalanceModal({cancelHandler}) {
             >
                 <p className={styles.modalHeading}>Add Balance</p>
                 <div className={styles.balanceFormContainer}>
-                    <input className={styles.balanceInput} type="number" placeholder="Income Amount" onChange={(e) => setBalanceInput(e.target.value)} />
+                    <TextField sx={{"& fieldset": { border: 'none' },}} className={styles.balanceInput} type="number" label="Income Amount" variant="outlined" onChange={(e) => setBalanceInput(e.target.value)} />
                     <button className={`${styles.addButton} cursor-pointer`} onClick={addBalanceHandler}>Add Balance</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </div>
