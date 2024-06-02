@@ -49,7 +49,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                 >
                 <p className={styles.modalHeading}>Add Expenses</p>
                 <form onSubmit={addHandler} className={styles.expenseFormContainer}>
-                    <TextField sx={{"& fieldset": { border: 'none' },}} onChange={(e) => setTitle(e.target.value)} className={styles.inputBox} id="title" label="Title" variant="outlined" required />
+                    <TextField sx={{"& fieldset": { border: 'none' },}} onChange={(e) => setTitle(e.target.value)} id="title" label="Title" variant="outlined" required />
                     <TextField sx={{"& fieldset": { border: 'none' },}} onChange={((e) => setPrice(e.target.value))} className={styles.inputBox} type="text" label="Price" id="price" variant="outlined" required />
                     <TextField sx={{"& fieldset": { border: 'none' },}} select onChange={((e) => setCategory(e.target.value))} className={styles.inputBox} name="Category Dropdown" label="Select Category" id="category" required>
                         <MenuItem value="Entertainment">Entertainment</MenuItem>
