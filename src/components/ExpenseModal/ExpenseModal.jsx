@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import TextField from '@mui/material/TextField';
 import styles from "./ExpenseModal.module.css";
 
 function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHandler, cancelHandler}) {
@@ -47,7 +48,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                 >
                 <p className={styles.modalHeading}>Add Expenses</p>
                 <form onSubmit={addHandler} className={styles.expenseFormContainer}>
-                    <input onChange={((e) => setTitle(e.target.value))} className={styles.inputBox} type="text" placeholder="Title" id="title" required />
+                    <TextField onChange={(e) => setTitle(e.target.value)} id="title" label="Outlined" variant="outlined" />
                     <input onChange={((e) => setPrice(e.target.value))} className={styles.inputBox} type="text" placeholder="Price" id="price" required />
                     <select onChange={((e) => setCategory(e.target.value))} className={styles.inputBox} name="Category Dropdown" placeholder="Select Category" id="category" required>
                         <option hidden disabled selected>Select Category</option>
