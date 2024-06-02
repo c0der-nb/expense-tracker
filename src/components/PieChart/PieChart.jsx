@@ -2,12 +2,6 @@ import React from 'react';
 import styles from './PieChart.module.css';
 import { PieChart, Pie, Cell } from "recharts";
 
-const tempData = [
-    { name: "Group A", value: 400 },
-    { name: "Group B", value: 300 },
-    { name: "Group C", value: 300 }
-];
-
 const COLORS = ["#FF9304", "#A000FF", "#FDE006"];
 const RADIAN = Math.PI/180;
 const renderCustomizedLabel = ({
@@ -37,11 +31,32 @@ const renderCustomizedLabel = ({
   };
 
 function PieChartComponent({data}) {
+    let categorisedDataList = [];
+    const buildCategorisedData = () => {
+      let entertainmentList = data.filter((val) => val.category === "Entertainment");
+      let foodList = data.filter((val) => val.category === "Food");
+      let travelList = data.filter((val) => val.category === "Travel");
+      categorisedDataList.push(
+        {
+          category: "Entertainment",
+          value: entertainmentList.reduce((acc, cv) => acc + parseInt(cv.price),0)
+        },
+        {
+          category: "Food",
+          value: foodList.reduce((acc, cv) => acc + parseInt(cv.price),0)
+        },
+        {
+          category: "Travel",
+          value: travelList.reduce((acc, cv) => acc + parseInt(cv.price),0)
+        }
+      )
+    }
+    buildCategorisedData();
     return (
         <div>
             <PieChart width={400} height={400}>
                 <Pie
-                    data={tempData}
+                    data={categorisedDataList}
                     cx={200}
                     cy={200}
                     labelLine={false}
@@ -50,7 +65,7 @@ function PieChartComponent({data}) {
                     fill="#8884d8"
                     dataKey="value"
                 >
-                    {tempData.map((entry, index) => (
+                    {categorisedDataList.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                 </Pie>

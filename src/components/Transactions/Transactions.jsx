@@ -8,7 +8,7 @@ import { ReactComponent as TravelIcon } from "../../assets/auto-icon.svg";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
 import { ReactComponent as RightArrow } from "../../assets/right-arrow.svg";
 
-function Transactions({expenses, editModalStateHandler}) {
+function Transactions({expenses, editModalStateHandler, deleteExpenseHandler}) {
     const [startIndex, setStartIndex] = useState(0);
     const [endIndex, setEndIndex] = useState(3);
     const [pageCount, setPageCount] = useState(1);
@@ -53,7 +53,7 @@ function Transactions({expenses, editModalStateHandler}) {
                         <div className={styles.priceButtons}>
                             <p>{`₹${expense.price}`}</p>
                             <div className={styles.icons}>
-                                <DeleteIcon className="cursor-pointer" />
+                                <DeleteIcon onClick={() => deleteExpenseHandler(expense.id)} className="cursor-pointer" />
                                 <EditIcon onClick={() => editModalStateHandler(expense, true)} className="cursor-pointer" />
                             </div>
                         </div>

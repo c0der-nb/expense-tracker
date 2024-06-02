@@ -4,11 +4,15 @@ import styles from "./AddBalanceModal.module.css";
 
 function AddBalanceModal({cancelHandler}) {
     const [balanceInput, setBalanceInput] = useState("");
+    const CURRENT_BALANCE = localStorage.getItem("WALLET_BALANCE");
     const addBalanceHandler = () => {
         if (!balanceInput)
             alert("Please enter valid amount")
         else {
-            localStorage.setItem("WALLET_BALANCE", balanceInput);
+            if (CURRENT_BALANCE)
+                localStorage.setItem("WALLET_BALANCE", JSON.stringify(parseInt(balanceInput) + parseInt(CURRENT_BALANCE)))
+            else
+                localStorage.setItem("WALLET_BALANCE", balanceInput);
             cancelHandler();
         }
     }

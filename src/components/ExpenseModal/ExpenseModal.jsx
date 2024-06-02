@@ -18,9 +18,9 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
     const updateHandler = () => {
         const updateRequest = {
             id: selectedExpense.id,
-            title: title? title : selectedExpense.title,
+            title: title ? title : selectedExpense.title,
             price: price ? price : selectedExpense.price,
-            category: category? category : selectedExpense.category,
+            category: category ? category : selectedExpense.category,
             date: date ? date : selectedExpense.date
         };
         if (validateUpdateRequest(updateRequest)) {
@@ -50,7 +50,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                     className={styles.modal}
                 >
                 <p className={styles.modalHeading}>Add Expenses</p>
-                <div className={styles.expenseFormContainer}>
+                <form onSubmit={addHandler} className={styles.expenseFormContainer}>
                     <input onChange={((e) => setTitle(e.target.value))} className={styles.inputBox} type="text" placeholder="Title" required />
                     <input onChange={((e) => setPrice(e.target.value))} className={styles.inputBox} type="text" placeholder="Price" required />
                     <select onChange={((e) => setCategory(e.target.value))} className={styles.inputBox} name="Category Dropdown" placeholder="Select Category" required>
@@ -60,9 +60,9 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                         <option value="Travel">Travel</option>
                     </select>
                     <input  onChange={(e) => setDate(e.target.value)} className={styles.inputBox} type="date" placeholder="dd/mm/yyyy" required />
-                    <button onClick={addHandler} className={`${styles.addButton} cursor-pointer`}>Add Expense</button>
+                    <button type="submit" className={`${styles.addButton} cursor-pointer`}>Add Expense</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
-                </div>
+                </form>
                 </ReactModal>
             </div>
         )
@@ -76,19 +76,19 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                     className={styles.modal}
                 >
                 <p className={styles.modalHeading}>Edit Expenses</p>
-                <div className={styles.expenseFormContainer}>
-                    <input onChange={(e) => setTitle(e.target.value)} className={styles.inputBox} type="text" placeholder="Title" defaultValue={selectedExpense.title} />
-                    <input onChange={(e) => setPrice(e.target.value)} className={styles.inputBox} type="text" placeholder="Price" defaultValue={selectedExpense.price} />
-                    <select onChange={(e) => setCategory(e.target.value)} className={styles.inputBox} name="Category Dropdown" placeholder="Select Category" defaultValue={selectedExpense.category}>
+                <form onSubmit={updateHandler} className={styles.expenseFormContainer}>
+                    <input onChange={(e) => setTitle(e.target.value)} className={styles.inputBox} type="text" placeholder="Title" defaultValue={selectedExpense.title} required />
+                    <input onChange={(e) => setPrice(e.target.value)} className={styles.inputBox} type="text" placeholder="Price" defaultValue={selectedExpense.price} required />
+                    <select onChange={(e) => setCategory(e.target.value)} className={styles.inputBox} name="Category Dropdown" placeholder="Select Category" defaultValue={selectedExpense.category} required>
                         <option hidden disabled selected>Select Category</option>
                         <option value="Entertainment">Entertainment</option>
                         <option value="Food">Food</option>
                         <option value="Travel">Travel</option>
                     </select>
-                    <input  onChange={(e) => setDate(e.target.value)} className={styles.inputBox} type="date" placeholder="dd/mm/yyyy" defaultValue={selectedExpense.date}/>
-                    <button className={`${styles.addButton} cursor-pointer`} onClick={updateHandler}>Update Expense</button>
+                    <input  onChange={(e) => setDate(e.target.value)} className={styles.inputBox} type="date" placeholder="dd/mm/yyyy" defaultValue={selectedExpense.date} required/>
+                    <button type="submit" className={`${styles.addButton} cursor-pointer`}>Update Expense</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
-                </div>
+                </form>
                 </ReactModal>
             </div>
         )

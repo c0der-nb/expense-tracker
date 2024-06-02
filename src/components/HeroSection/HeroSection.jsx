@@ -3,12 +3,12 @@ import styles from "./HeroSection.module.css";
 import Card from "../Card/Card";
 import PieChart from '../../components/PieChart/PieChart';
 
-function HeroSection({addModalStateHandler, balanceModalStateHandler}) {
+function HeroSection({expenses, addModalStateHandler, balanceModalStateHandler, totalExpenses}) {
     return (
         <div className={styles.wrapper}>
             <Card type='income' addBalanceHandler={balanceModalStateHandler}/>
-            <Card type='expense' addIncomeHandler={addModalStateHandler} />
-            <PieChart />
+            <Card type='expense'  totalExpenses={totalExpenses} addIncomeHandler={addModalStateHandler} />
+            <PieChart data={expenses} />
         </div>
     )
 }
