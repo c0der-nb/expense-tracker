@@ -9,14 +9,16 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
     const [category, setCategory] = useState("");
     const [date, setDate] = useState("")
 
-    const addHandler = () => {
+    const addHandler = (e) => {
+        e.preventDefault();
         if (validate()) {
             const request = {id: Math.floor(Math.random()*1000), category, title, price, date};
             addExpenseHandler(request);
         }
     }
 
-    const updateHandler = () => {
+    const updateHandler = (e) => {
+        e.preventDefault();
         const updateRequest = {
             id: selectedExpense.id,
             title: title ? title : selectedExpense.title,
@@ -49,14 +51,14 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                 >
                 <p className={styles.modalHeading}>Add Expenses</p>
                 <form onSubmit={addHandler} className={styles.expenseFormContainer}>
-                    <TextField onChange={(e) => setTitle(e.target.value)} id="title" label="Title" variant="outlined" />
-                    <TextField onChange={((e) => setPrice(e.target.value))} type="text" label="Price" id="price" variant="outlined" />
-                    <TextField style={{width: '223px'}} select onChange={((e) => setCategory(e.target.value))} name="Category Dropdown" label="Select Category" id="category">
+                    <TextField onChange={(e) => setTitle(e.target.value)} id="title" label="Title" variant="outlined" required />
+                    <TextField onChange={((e) => setPrice(e.target.value))} type="text" label="Price" id="price" variant="outlined" required />
+                    <TextField style={{width: '223px'}} select onChange={((e) => setCategory(e.target.value))} name="Category Dropdown" label="Select Category" id="category" required>
                         <MenuItem value="Entertainment">Entertainment</MenuItem>
                         <MenuItem value="Food">Food</MenuItem>
                         <MenuItem value="Travel">Travel</MenuItem>
                     </TextField>
-                    <TextField style={{width: '223px'}} onChange={(e) => setDate(e.target.value)} type="date" placeholder="dd/mm/yyyy" id="date" />
+                    <TextField style={{width: '223px'}} onChange={(e) => setDate(e.target.value)} type="date" placeholder="dd/mm/yyyy" id="date" required />
                     <button type="submit" className={`${styles.addButton} cursor-pointer`}>Add Expense</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </form>
@@ -72,13 +74,13 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                 <p className={styles.modalHeading}>Edit Expenses</p>
                 <form onSubmit={updateHandler} className={styles.expenseFormContainer}>
                     <TextField onChange={(e) => setTitle(e.target.value)} type="text" label="Title" variant="outlined" defaultValue={selectedExpense.title} id="title" required />
-                    <TextField onChange={(e) => setPrice(e.target.value)} type="text" label="Price" variant="outlined" defaultValue={selectedExpense.price} id="price" />
-                    <TextField style={{width: '223px'}} fullWidth select onChange={(e) => setCategory(e.target.value)} name="Category Dropdown" label="Select Category" variant="outlined" defaultValue={selectedExpense.category} id="category">
+                    <TextField onChange={(e) => setPrice(e.target.value)} type="text" label="Price" variant="outlined" defaultValue={selectedExpense.price} id="price" required/>
+                    <TextField style={{width: '223px'}} fullWidth select onChange={(e) => setCategory(e.target.value)} name="Category Dropdown" label="Select Category" variant="outlined" defaultValue={selectedExpense.category} required id="category">
                         <MenuItem value="Entertainment">Entertainment</MenuItem>
                         <MenuItem value="Food">Food</MenuItem>
                         <MenuItem value="Travel">Travel</MenuItem>
                     </TextField>
-                    <TextField style={{width: '223px'}} onChange={(e) => setDate(e.target.value)} type="date" label="dd/mm/yyyy" variant="outlined" defaultValue={selectedExpense.date} id="date"/>
+                    <TextField style={{width: '223px'}} onChange={(e) => setDate(e.target.value)} type="date" label="dd/mm/yyyy" variant="outlined" defaultValue={selectedExpense.date} id="date" required/>
                     <button type="submit" className={`${styles.addButton} cursor-pointer`}>Update Expense</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </form>
