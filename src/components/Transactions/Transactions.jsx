@@ -39,7 +39,7 @@ function Transactions({expenses, editModalStateHandler, deleteExpenseHandler}) {
             <div>
             {
                 expenses.slice(startIndex, endIndex).map((expense) => (
-                <div>
+                <div key={expense.id}>
                     <div className={styles.lineItem}>
                         <div className={styles.item}>
                             {expense.category === "Entertainment" && <EntertainmentIcon />}

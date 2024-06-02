@@ -25,7 +25,7 @@ function TopExpenses({data}) {
     return (
         <div className={styles.wrapper}>
             {categorisedDataList.map((val) => (
-                <div className={styles.expense}>
+                <div className={styles.expense} key={val.category}>
                     <div className={styles.expenseTitle}>{val.category}</div>
                     <div className={styles.barContainer}>
                         <div style={{width: `${(val.value/topExpense)*100}%`}} className={styles.expenseBar}></div>

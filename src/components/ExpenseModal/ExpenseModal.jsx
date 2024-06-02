@@ -48,6 +48,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                     contentLabel="Add Expense Modal"
                     overlayClassName={styles.overlay}
                     className={styles.modal}
+                    ariaHideApp={false}
                 >
                 <p className={styles.modalHeading}>Add Expenses</p>
                 <form onSubmit={addHandler} className={styles.expenseFormContainer}>
