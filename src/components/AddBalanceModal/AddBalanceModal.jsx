@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import styles from "./AddBalanceModal.module.css";
+import { enqueueSnackbar } from "notistack";
 
 function AddBalanceModal({cancelHandler}) {
     const [balanceInput, setBalanceInput] = useState("");
     const CURRENT_BALANCE = localStorage.getItem("WALLET_BALANCE");
     const addBalanceHandler = () => {
         if (!balanceInput)
-            alert("Please enter valid amount")
+            enqueueSnackbar("Please enter valid amount")
         else {
             if (CURRENT_BALANCE)
                 localStorage.setItem("WALLET_BALANCE", JSON.stringify(parseInt(balanceInput) + parseInt(CURRENT_BALANCE)))
