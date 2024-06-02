@@ -3,7 +3,7 @@ import { enqueueSnackbar } from 'notistack';
 import styles from './Homepage.module.css';
 import Hero from '../../components/HeroSection/HeroSection';
 import Transactions from '../../components/Transactions/Transactions';
-import TopExpenses from '../../TopExpenses/TopExpenses';
+import TopExpenses from '../../components/TopExpenses/TopExpenses';
 import ExpenseModal from '../../components/ExpenseModal/ExpenseModal';
 import AddBalanceModal from '../../components/AddBalanceModal/AddBalanceModal';
 
