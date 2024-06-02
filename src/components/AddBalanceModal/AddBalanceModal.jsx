@@ -25,7 +25,7 @@ function AddBalanceModal({cancelHandler}) {
             >
                 <p className={styles.modalHeading}>Add Balance</p>
                 <div className={styles.balanceFormContainer}>
-                    <TextField sx={{"& fieldset": { border: 'none' },}} className={styles.balanceInput} type="number" label="Income Amount" variant="outlined" onChange={(e) => setBalanceInput(e.target.value)} />
+                    <TextField style={{width:'217px'}} type="number" label="Income Amount" variant="outlined" onChange={(e) => setBalanceInput(e.target.value)} />
                     <button className={`${styles.addButton} cursor-pointer`} onClick={addBalanceHandler}>Add Balance</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </div>

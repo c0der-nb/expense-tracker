@@ -71,7 +71,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                 >
                 <p className={styles.modalHeading}>Edit Expenses</p>
                 <form onSubmit={updateHandler} className={styles.expenseFormContainer}>
-                    <TextField onChange={(e) => setTitle(e.target.value)} type="text" label="Title" variant="outlined" defaultValue={selectedExpense.title} id="title" />
+                    <TextField onChange={(e) => setTitle(e.target.value)} type="text" label="Title" variant="outlined" defaultValue={selectedExpense.title} id="title" required />
                     <TextField onChange={(e) => setPrice(e.target.value)} type="text" label="Price" variant="outlined" defaultValue={selectedExpense.price} id="price" />
                     <TextField style={{width: '223px'}} fullWidth select onChange={(e) => setCategory(e.target.value)} name="Category Dropdown" label="Select Category" variant="outlined" defaultValue={selectedExpense.category} id="category">
                         <MenuItem value="Entertainment">Entertainment</MenuItem>
