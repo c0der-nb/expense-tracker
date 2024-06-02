@@ -46,7 +46,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                     className={styles.modal}
                 >
                 <p className={styles.modalHeading}>Add Expenses</p>
-                <form onSubmit={addHandler} className={styles.expenseFormContainer}>
+                <div className={styles.expenseFormContainer}>
                     <input onChange={((e) => setTitle(e.target.value))} className={styles.inputBox} type="text" placeholder="Title" required />
                     <input onChange={((e) => setPrice(e.target.value))} className={styles.inputBox} type="text" placeholder="Price" required />
                     <select onChange={((e) => setCategory(e.target.value))} className={styles.inputBox} name="Category Dropdown" placeholder="Select Category" required>
@@ -56,9 +56,9 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                         <option value="Travel">Travel</option>
                     </select>
                     <input  onChange={(e) => setDate(e.target.value)} className={styles.inputBox} type="date" placeholder="dd/mm/yyyy" required />
-                    <button type="submit" className={`${styles.addButton} cursor-pointer`}>Add Expense</button>
+                    <button onClick={addHandler} className={`${styles.addButton} cursor-pointer`}>Add Expense</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
-                </form>
+                </div>
                 </div>
             </div>
         )
@@ -69,7 +69,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                     className={styles.modal}
                 >
                 <p className={styles.modalHeading}>Edit Expenses</p>
-                <form onSubmit={updateHandler} className={styles.expenseFormContainer}>
+                <div className={styles.expenseFormContainer}>
                     <input onChange={(e) => setTitle(e.target.value)} className={styles.inputBox} type="text" placeholder="Title" defaultValue={selectedExpense.title} required />
                     <input onChange={(e) => setPrice(e.target.value)} className={styles.inputBox} type="text" placeholder="Price" defaultValue={selectedExpense.price} required />
                     <select onChange={(e) => setCategory(e.target.value)} className={styles.inputBox} name="Category Dropdown" placeholder="Select Category" defaultValue={selectedExpense.category} required>
@@ -79,9 +79,9 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                         <option value="Travel">Travel</option>
                     </select>
                     <input  onChange={(e) => setDate(e.target.value)} className={styles.inputBox} type="date" placeholder="dd/mm/yyyy" defaultValue={selectedExpense.date} required/>
-                    <button type="submit" className={`${styles.addButton} cursor-pointer`}>Update Expense</button>
+                    <button onClick={updateHandler} className={`${styles.addButton} cursor-pointer`}>Update Expense</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
-                </form>
+                </div>
                 </div>
             </div>
         )
