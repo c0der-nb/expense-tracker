@@ -8,7 +8,11 @@ function AddBalanceModal({cancelHandler}) {
     const CURRENT_BALANCE = localStorage.getItem("WALLET_BALANCE");
     const addBalanceHandler = () => {
         if (!balanceInput)
-            enqueueSnackbar("Please enter valid amount")
+            enqueueSnackbar("Please enter valid amount", {
+                anchorOrigin: {
+                    horizontal: "center",
+                    vertical: "bottom"
+                }})
         else {
             if (CURRENT_BALANCE)
                 localStorage.setItem("WALLET_BALANCE", JSON.stringify(parseInt(balanceInput) + parseInt(CURRENT_BALANCE)))

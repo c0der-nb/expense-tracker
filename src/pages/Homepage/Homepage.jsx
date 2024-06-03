@@ -61,7 +61,11 @@ function Homepage() {
     }
     const addExpenseHandler = (expense) => {
         if (WALLET_BALANCE && parseInt(expense.price) > WALLET_BALANCE)
-            enqueueSnackbar("Expense can't be greater than your wallet balance.");
+            enqueueSnackbar("Expense can't be greater than your wallet balance.", {
+                anchorOrigin: {
+                    horizontal: "center",
+                    vertical: "bottom"
+                }});
         else {
             setExpenses([expense, ...expenses])
             closeModal();
