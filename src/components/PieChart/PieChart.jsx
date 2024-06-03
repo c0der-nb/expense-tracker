@@ -1,6 +1,5 @@
 import React from 'react';
-import styles from './PieChart.module.css';
-import { PieChart, Pie, Cell } from "recharts";
+import { PieChart, Pie, Cell, Legend } from "recharts";
 
 const COLORS = ["#FF9304", "#A000FF", "#FDE006"];
 const RADIAN = Math.PI/180;
@@ -38,47 +37,39 @@ function PieChartComponent({data}) {
       let travelList = data.filter((val) => val.category === "Travel");
       categorisedDataList.push(
         {
-          category: "Entertainment",
+          name: "Entertainment",
           value: entertainmentList.reduce((acc, cv) => acc + parseInt(cv.price),0)
         },
         {
-          category: "Food",
+          name: "Food",
           value: foodList.reduce((acc, cv) => acc + parseInt(cv.price),0)
         },
         {
-          category: "Travel",
+          name: "Travel",
           value: travelList.reduce((acc, cv) => acc + parseInt(cv.price),0)
         }
       )
     }
     buildCategorisedData();
     return (
-        <div>
-            <PieChart width={400} height={400}>
+            <PieChart style={{width: '355.35px', height: '181px'}} width={355.35} height={181}>
                 <Pie
                     data={categorisedDataList}
-                    cx={200}
-                    cy={200}
+                    cx="50%"
+                    cy="50%"
                     labelLine={false}
                     label={renderCustomizedLabel}
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="value"
+                    isAnimationActive={true}
                 >
                     {categorisedDataList.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                 </Pie>
+                <Legend wrapperStyle={{position: 'static'}} />
             </PieChart>
-            <div className={styles.legendContainer}>
-                <div className={styles.food}></div>
-                <p>Food</p>
-                <div className={styles.entertainment}></div>
-                <p>Entertaiment</p>
-                <div className={styles.travel}></div>
-                <p>Travel</p>
-            </div>
-        </div>
     )
 }
 

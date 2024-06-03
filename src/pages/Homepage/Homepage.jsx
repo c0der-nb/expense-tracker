@@ -122,7 +122,9 @@ function Homepage() {
     return (
         <div className={styles.wrapper}>
             <h3 className={styles.etHeading}><b>Expense Tracker</b></h3>
-            <Hero expenses={expenses} addModalStateHandler={addModalStateHandler} balanceModalStateHandler={balanceModalStateHandler} totalExpenses={totalExpenses} />
+            <div className={styles.heroWrapper}>
+                <Hero expenses={expenses} addModalStateHandler={addModalStateHandler} balanceModalStateHandler={balanceModalStateHandler} totalExpenses={totalExpenses} />
+            </div>
             {addModalActive && <ExpenseModal addExpenseHandler={addExpenseHandler} type="add" cancelHandler={closeModal} />}
             {editModalActive && <ExpenseModal selectedExpense={selectedExpense} updateExpenseHandler={updateExpenseHandler} type="edit" cancelHandler={closeModal} />}
             {balanceModalActive && <AddBalanceModal cancelHandler={closeModal} />}

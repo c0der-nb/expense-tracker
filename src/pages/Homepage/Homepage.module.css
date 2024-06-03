@@ -17,7 +17,34 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap: wrap;
     column-gap: 2rem;
+}
+
+@media only screen and (max-width: 1226px) {
+    .main {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        row-gap: 2rem;
+    }
+}
+
+.heroWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 773px */
+@media only screen and (max-width: 773px) {
+.transactions {
+    width: 100%;
+}
+.topExpenses {
+    width: 100%;
+}
 }
 
 .transactions h4:first-of-type {

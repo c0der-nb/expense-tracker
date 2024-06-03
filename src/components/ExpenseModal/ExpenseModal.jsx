@@ -52,7 +52,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                 <p className={styles.modalHeading}>Add Expenses</p>
                 <form onSubmit={addHandler} className={styles.expenseFormContainer}>
                     <TextField onChange={(e) => setTitle(e.target.value)} id="title" label="Title" variant="outlined" required />
-                    <TextField onChange={((e) => setPrice(e.target.value))} type="text" label="Price" id="price" variant="outlined" required />
+                    <TextField onChange={((e) => setPrice(e.target.value))} type="number" label="Price" id="price" variant="outlined" required />
                     <TextField style={{width: '223px'}} select onChange={((e) => setCategory(e.target.value))} name="Category Dropdown" label="Select Category" id="category" required>
                         <MenuItem value="Entertainment">Entertainment</MenuItem>
                         <MenuItem value="Food">Food</MenuItem>
@@ -74,7 +74,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                 <p className={styles.modalHeading}>Edit Expenses</p>
                 <form onSubmit={updateHandler} className={styles.expenseFormContainer}>
                     <TextField onChange={(e) => setTitle(e.target.value)} type="text" label="Title" variant="outlined" defaultValue={selectedExpense.title} id="title" required />
-                    <TextField onChange={(e) => setPrice(e.target.value)} type="text" label="Price" variant="outlined" defaultValue={selectedExpense.price} id="price" required/>
+                    <TextField onChange={(e) => setPrice(e.target.value)} type="number" label="Price" variant="outlined" defaultValue={selectedExpense.price} id="price" required/>
                     <TextField style={{width: '223px'}} fullWidth select onChange={(e) => setCategory(e.target.value)} name="Category Dropdown" label="Select Category" variant="outlined" defaultValue={selectedExpense.category} required id="category">
                         <MenuItem value="Entertainment">Entertainment</MenuItem>
                         <MenuItem value="Food">Food</MenuItem>
