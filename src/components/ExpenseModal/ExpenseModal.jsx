@@ -80,7 +80,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                         <MenuItem value="Food">Food</MenuItem>
                         <MenuItem value="Travel">Travel</MenuItem>
                     </TextField>
-                    <TextField style={{width: '223px'}} onChange={(e) => setDate(e.target.value)} type="date" label="dd/mm/yyyy" variant="outlined" defaultValue={selectedExpense.date} id="date" required/>
+                    <TextField style={{width: '223px'}} onChange={(e) => setDate(e.target.value)} type="date" variant="outlined" defaultValue={selectedExpense.date} id="date" required/>
                     <button type="submit" className={`${styles.addButton} cursor-pointer`}>Update Expense</button>
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </form>
