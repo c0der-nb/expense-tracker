@@ -1,0 +1,27 @@
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginCard {
+    height: 20rem;
+    width: 30rem;
+    border: none;
+    background-color: beige;
+    border-radius: 4px;
+    box-shadow: 3px 6px 5px grey;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+
+.btnSubmit {
+    display: block;
+}
+
+label {
+    display: block;
+}
