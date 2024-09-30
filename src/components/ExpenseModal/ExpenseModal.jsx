@@ -12,7 +12,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
     const addHandler = (e) => {
         e.preventDefault();
         if (validate()) {
-            const request = {id: Math.floor(Math.random()*1000), category, title, price, date};
+            const request = {category, title, price: parseInt(price), date};
             addExpenseHandler(request);
         }
     }
@@ -22,7 +22,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
         const updateRequest = {
             id: selectedExpense.id,
             title: title ? title : selectedExpense.title,
-            price: price ? price : selectedExpense.price,
+            price: price ? parseInt(price) : selectedExpense.price,
             category: category ? category : selectedExpense.category,
             date: date ? date : selectedExpense.date
         };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
 import styles from './Homepage.module.css';
 import Hero from '../../components/HeroSection/HeroSection';
@@ -6,37 +7,11 @@ import Transactions from '../../components/Transactions/Transactions';
 import TopExpenses from '../../components/TopExpenses/TopExpenses';
 import ExpenseModal from '../../components/ExpenseModal/ExpenseModal';
 import AddBalanceModal from '../../components/AddBalanceModal/AddBalanceModal';
+import Header from '../../components/Header/Header';
+import { config } from '../../App';
 
-const INITIAL_EXPENSES = [
-    {
-        id: 1,
-        category: "Food",
-        title: "Samosa",
-        price: "150",
-        date: "2024-03-23"
-    },
-    {
-        id: 2,
-        category: "Entertainment",
-        title: "Movie",
-        price: "300",
-        date: "2024-03-22"
-    },
-    {
-        id: 3,
-        category: "Travel",
-        title: "Auto",
-        price: "50",
-        date: "2024-03-21"
-    },
-    {
-        id: 4,
-        category: "Travel",
-        title: "Auto",
-        price: "50",
-        date: "2024-03-21"
-    }
-]
+const token = localStorage.getItem('token')
+ 
 
 function Homepage() {
     const [addModalActive, setAddModalActive] = useState(false);
@@ -45,8 +20,8 @@ function Homepage() {
     const [expenses, setExpenses] = useState([]);
     const [totalExpenses, setTotalExpenses] = useState("");
     const [selectedExpense, setSelectedExpense] = useState({});
-    
-    const WALLET_BALANCE = localStorage.getItem("WALLET_BALANCE");
+    const [walletBalance, setWalletBalance] = useState(0);
+    const navigate = useNavigate();
 
     const addModalStateHandler = (isAddModalActive) => setAddModalActive(isAddModalActive);
     const editModalStateHandler = (expense, isEditModalActive) => {
@@ -60,62 +35,161 @@ function Homepage() {
         setBalanceModalActive(false);
     }
     const addExpenseHandler = (expense) => {
-        if (WALLET_BALANCE && parseInt(expense.price) > WALLET_BALANCE)
-            enqueueSnackbar("Expense can't be greater than your wallet balance.", {
-                anchorOrigin: {
-                    horizontal: "center",
-                    vertical: "bottom"
-                }});
+        if (walletBalance <= 0 || parseInt(expense.price) > walletBalance)
+            enqueueSnackbar("Expense can't be greater than your wallet balance.");
         else {
-            setExpenses([expense, ...expenses])
-            closeModal();
-            persistChanges(expense);
+            saveExpense(expense);
+        }
+    }
+    const saveExpense = async (expense) => {
+        try {
+            const response = await fetch(`${config.endpoint}/expense`, {
+                method: 'POST',
+                body: JSON.stringify(expense),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (response.status === 401) {
+                if (response.status === 401) {
+                    enqueueSnackbar("Session expired. Please log in again.")
+                    navigate('/login');
+                }
+            }
+            if (response.status === 201) {
+                enqueueSnackbar("Expense created!")
+                setExpenses([expense, ...expenses]);
+                closeModal();
+                getWalletBalance();
+            }
+        }
+        catch (ex) {
+            console.log(ex);
+            enqueueSnackbar("Server is not responding. Please try again later.")
         }
     }
     const updateExpenseHandler = (expense) => {
-        const index = expenses.findIndex((val) => val.id === expense.id);
-        expenses[index] = expense;
-        setExpenses(expenses);
-        updateTotalExpense();
-        closeModal();
-        pesistUpdateChanges(expense);
+        updateExpense(expense);
     }
-    const deleteExpenseHandler = (id) => {
-        const index = expenses.findIndex((expense) => expense.id === id);
-        let updatedExpenses = expenses.toSpliced(index, 1);
-        if (updatedExpenses)
-            setExpenses(updatedExpenses);
-        persistDeleteChanges(id);
+    const updateExpense = async (expense) => {
+        try {
+            const response = await fetch(`${config.endpoint}/expense/${expense.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(expense),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.status === 401) {
+                enqueueSnackbar("Session expired. Please log in again.")
+                navigate('/login');
+            }
+            if (response.status === 200) {
+                const index = expenses.findIndex((val) => val.id === expense.id);
+                expenses[index] = expense;
+                setExpenses(expenses);
+                updateTotalExpense();
+                enqueueSnackbar("Expense updated!")
+                closeModal();
+                getWalletBalance();
+            }
+        }
+        catch (ex) {
+            console.log(ex);
+            enqueueSnackbar("Server is not responding. Please try again later.")
+        }
     }
-    const persistChanges = (expense) => {
-        const updatedExpense = [expense, ...expenses]
-        localStorage.setItem("EXPENSES", JSON.stringify(updatedExpense));
-        localStorage.setItem("WALLET_BALANCE", JSON.stringify(WALLET_BALANCE-expense.price));
+    const deleteExpenseHandler = async (id) => {
+        try {
+            const response = await fetch(`${config.endpoint}/expense/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.status === 401) {
+                enqueueSnackbar("Session expired. Please log in again.")
+                navigate('/login');
+            }
+            if (response.status === 200) {
+                const index = expenses.findIndex((expense) => expense.id === id);
+                let updatedExpenses = expenses.toSpliced(index, 1);
+                setExpenses(updatedExpenses);
+                enqueueSnackbar("Expense deleted!");
+            }
+        }
+        catch (ex) {
+            console.log(ex);
+            enqueueSnackbar("Server is not responding. Please try again later.")
+        }
     }
-    const pesistUpdateChanges = (expense) => {
-        const index = expenses.findIndex((val) => val.id === expense.id);
-        expenses[index] = expense;
-        localStorage.setItem("EXPENSES", JSON.stringify(expenses));
-    }
-    const persistDeleteChanges = (id) => {
-        const index = expenses.findIndex((expense) => expense.id === id);
-        let updatedExpenses = expenses.toSpliced(index, 1);
-        localStorage.setItem("EXPENSES", JSON.stringify(updatedExpenses));
-    }
+
     const updateTotalExpense = () => {
-        const totalExpense = expenses.reduce((acc, cv) => acc+parseInt(cv.price),0);
+        const totalExpense = expenses.reduce((acc, cv) => acc+cv.price,0);
         setTotalExpenses(totalExpense);
     }
 
-    useEffect(() => {
-        if (!localStorage.getItem("WALLET_BALANCE"))
-            localStorage.setItem("WALLET_BALANCE", "5000")
-        const expenses = JSON.parse(localStorage.getItem("EXPENSES"));
-        if (expenses) {
-            setExpenses(expenses);
+    const getWalletBalance = async () => {
+        try {
+            const token = localStorage.getItem('token')
+            const response = await fetch(`${config.endpoint}/user/wallet_balance`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            if (response.status === 401) {
+                enqueueSnackbar("Session expired. Please log in again.")
+                navigate('/login');
+            }
+            if (response.status === 200) {
+                const jsonResponse = await response.json();
+                setWalletBalance(jsonResponse.wallet_balance)
+            }
         }
+        catch (ex) {
+            console.log(ex);
+            enqueueSnackbar("Server is not responding. Please try again later.")
+        }
+    }
+
+    const updateWalletBalance = () => {
+        getWalletBalance();
+        closeModal();
+    }
+
+    const getExpenses = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${config.endpoint}/expense`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+            if (response.status === 401) {
+                enqueueSnackbar("Session expired. Please log in again.")
+                navigate('/login');
+            }
+            if (response.status === 200) {
+                const expenseList = await response.json();
+                setExpenses([...expenseList.data]);
+            }
+        }
+        catch (ex) {
+            console.log(ex);
+            enqueueSnackbar("Server is not responding. Please try again later.")
+        }
+    }
+
+    useEffect(() => {
+        console.log(token);
+        if (!localStorage.getItem('token'))
+            navigate('/login');
         else {
-            setExpenses(INITIAL_EXPENSES);
+            getExpenses();
+            getWalletBalance();
         }
     }, [])
 
@@ -124,14 +198,15 @@ function Homepage() {
     }, [expenses])
 
     return (
+        <>
+        <Header />
         <div className={styles.wrapper}>
-            <h3 className={styles.etHeading}><b>Expense Tracker</b></h3>
             <div className={styles.heroWrapper}>
-                <Hero expenses={expenses} addModalStateHandler={addModalStateHandler} balanceModalStateHandler={balanceModalStateHandler} totalExpenses={totalExpenses} />
+                <Hero expenses={expenses} addModalStateHandler={addModalStateHandler} balanceModalStateHandler={balanceModalStateHandler} totalExpenses={totalExpenses} walletBalance={walletBalance} />
             </div>
             {addModalActive && <ExpenseModal addExpenseHandler={addExpenseHandler} type="add" cancelHandler={closeModal} />}
             {editModalActive && <ExpenseModal selectedExpense={selectedExpense} updateExpenseHandler={updateExpenseHandler} type="edit" cancelHandler={closeModal} />}
-            {balanceModalActive && <AddBalanceModal cancelHandler={closeModal} />}
+            {balanceModalActive && <AddBalanceModal cancelHandler={closeModal} updateWalletBalance={updateWalletBalance} />}
             <div className={styles.main}>
                 <div className={styles.transactions}>
                     <h4>Recent Transactions</h4>
@@ -144,6 +219,7 @@ function Homepage() {
             </div>
             <footer></footer>
         </div>
+        </>
     )
 }
 

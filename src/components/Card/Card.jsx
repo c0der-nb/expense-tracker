@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from "./Card.module.css";
 
-function Card({type, totalExpenses, addBalanceHandler, addIncomeHandler}) {
+function Card({type, totalExpenses, addBalanceHandler, addIncomeHandler, walletBalance}) {
     if (type === "income") {
         return (
             <div className={styles.wrapper}>
-                <p>Wallet Balance: <span className={styles.bSpan}>{`₹${localStorage.getItem("WALLET_BALANCE")}`}</span></p>
+                <p>Wallet Balance: <span className={styles.bSpan}>{`₹${walletBalance}`}</span></p>
                 <button className={styles.incomeButton} onClick={() => addBalanceHandler(true)}>+ Add Income</button>
             </div>
         )

@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import styles from './Login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
+import {config} from '../../App';
 
 function Login({ placeholder }) {
     const navigate = useNavigate();
-    // if (localStorage.getItem('token'))
-    //     navigate('/homepage')
 
     const [loginForm, setLoginForm] = useState({
         email: '',
@@ -25,7 +24,7 @@ function Login({ placeholder }) {
         if (!validateLoginForm)
             return;
         try {
-            const res = await fetch("http://127.0.0.1:5000/api/v1/auth/login", {
+            const res = await fetch(`${config.endpoint}/auth/login`, {
                 method: 'POST',
                 body: JSON.stringify(loginForm),
                 headers: {
@@ -35,11 +34,7 @@ function Login({ placeholder }) {
             if (res.status === 200) {
                 const resJson = await res.json();
                 persistLoginInfo(resJson["Authorization"]);
-                enqueueSnackbar("Log in successful", {
-                    anchorOrigin: {
-                        horizontal: "center",
-                        vertical: "bottom"
-                    }})
+                enqueueSnackbar("Log in successful")
                 navigate("/homepage");
             }
             if (res.status === 401) {
@@ -59,6 +54,11 @@ function Login({ placeholder }) {
         localStorage.setItem("email", loginForm.email)
         localStorage.setItem("token", token)
     }
+
+    useEffect(() => {
+    // if (localStorage.getItem('token'))
+    //     navigate('/homepage')
+    }, [])
 
     return (
         <div className={styles.container}>
