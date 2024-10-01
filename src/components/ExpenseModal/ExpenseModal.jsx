@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import TextField from '@mui/material/TextField';
 import styles from "./ExpenseModal.module.css";
 import { MenuItem } from "@mui/material";

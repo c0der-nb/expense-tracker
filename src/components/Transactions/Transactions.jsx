@@ -35,6 +35,7 @@ function Transactions({expenses, editModalStateHandler, deleteExpenseHandler}) {
     }, [])
 
     return (
+        <> {expenses.length > 0 ?
         <div className={styles.wrapper}>
             <div>
             {
@@ -69,6 +70,8 @@ function Transactions({expenses, editModalStateHandler, deleteExpenseHandler}) {
                 <button onClick={nextHandler} className={`${styles.arrow} cursor-pointer`}><RightArrow /></button>
             </div>
         </div>
+        : <p className={styles.wrapperEmpty}>Start adding expense to see transactions.</p>}
+        </>
     )
 }
 

@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styles from './Login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
+import { TextField } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
 import {config} from '../../App';
+import video  from '../../assets/video.mp4';
 
 function Login({ placeholder }) {
     const navigate = useNavigate();
@@ -11,6 +15,7 @@ function Login({ placeholder }) {
         email: '',
         password: ''
     })
+    const [isLoading, setIsLoading] = useState(false);
 
     const validateLoginForm = () => {
         for (const key in loginForm)
@@ -24,6 +29,7 @@ function Login({ placeholder }) {
         if (!validateLoginForm)
             return;
         try {
+            setIsLoading(true);
             const res = await fetch(`${config.endpoint}/auth/login`, {
                 method: 'POST',
                 body: JSON.stringify(loginForm),
@@ -31,22 +37,20 @@ function Login({ placeholder }) {
                     'Content-Type': 'application/json'
                 }
             })
+            const resJson = await res.json();
+            setIsLoading(false);
             if (res.status === 200) {
-                const resJson = await res.json();
                 persistLoginInfo(resJson["Authorization"]);
                 enqueueSnackbar("Log in successful")
                 navigate("/homepage");
             }
             if (res.status === 401) {
-                enqueueSnackbar("Invalid email or password", {
-                    anchorOrigin: {
-                        horizontal: "center",
-                        vertical: "bottom"
-                }})
+                enqueueSnackbar("Invalid email or password")
             }
         }
         catch (ex) {
-            console.log(ex)
+            setIsLoading(false);
+            enqueueSnackbar("Server is not responding. Please try again later.")
         }
     }
 
@@ -55,30 +59,29 @@ function Login({ placeholder }) {
         localStorage.setItem("token", token)
     }
 
-    useEffect(() => {
-    // if (localStorage.getItem('token'))
-    //     navigate('/homepage')
-    }, [])
-
     return (
-        <div className={styles.container}>
-            <form className={styles.loginCard} onSubmit={submitHandler}>
-                <div>
-                    <label htmlFor='email'>EMAIL</label>
-                    <input type='email' onChange={(e) => setLoginForm((prev) => ({...prev, email: e.target.value}))} id='email' required />
-                </div>
-                <div>
-                    <label htmlFor='password'>PASSWORD</label>
-                    <input type='password' onChange={(e) => setLoginForm((prev) => ({...prev, password: e.target.value}))} id='password' required />
-                </div>
-                <div>
-                    <button className={styles.btnSubmit} type='submit'>Submit</button>
-                </div>
-                <div>
-                    <p>Don't have an account? <Link to='/register'>Click here to register.</Link></p>
-                </div>
-            </form>
-        </div>
+        <>
+            <video autoPlay muted loop>
+                <source src={video} type="video/mp4" />
+            </video>
+            <div className={styles.container}>
+                <form className={styles.loginCard} onSubmit={submitHandler}>
+                    <div>
+                        <TextField required onChange={(e) => setLoginForm((prev) => ({...prev, email: e.target.value}))} type='email' id="outlined-basic" label="Email" variant="outlined" />
+                    </div>
+                    <div>
+                        <TextField required type='password' id="outlined-basic" label="Password" variant="outlined" onChange={(e) => setLoginForm((prev) => ({...prev, password: e.target.value}))} />
+                    </div>
+                    <div>
+                        {!isLoading ? <Button variant="contained" type='submit'>Login</Button>
+                        : <div className={styles.spinner}><CircularProgress size={20} /></div>}
+                    </div>
+                    <div>
+                        <p>Don't have an account? <Link to='/register'><Button><b>Click here to register.</b></Button></Link></p>
+                    </div>
+                </form>
+            </div>
+        </>
     )
 }
 
