@@ -5,7 +5,7 @@ import { enqueueSnackbar } from 'notistack';
 import { TextField } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
-import {config} from '../../App';
+import { config } from '../../App';
 import video  from '../../assets/video.mp4';
 
 function Login({ placeholder }) {
@@ -61,7 +61,7 @@ function Login({ placeholder }) {
 
     return (
         <>
-            <video autoPlay muted loop>
+            <video autoPlay muted loop playsInline>
                 <source src={video} type="video/mp4" />
             </video>
             <div className={styles.container}>
@@ -77,7 +77,7 @@ function Login({ placeholder }) {
                         : <div className={styles.spinner}><CircularProgress size={20} /></div>}
                     </div>
                     <div>
-                        <p>Don't have an account? <Link to='/register'><Button><b>Click here to register.</b></Button></Link></p>
+                        <p>Don't have an account? <Link to='/register'><Button className={styles.clickRegister}><b>Click here to register.</b></Button></Link></p>
                     </div>
                 </form>
             </div>

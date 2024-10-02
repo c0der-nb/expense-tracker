@@ -58,7 +58,7 @@ function Register() {
 
     return (
         <>
-        <video autoPlay muted loop>
+        <video autoPlay muted loop playsInline>
             <source src={video} type="video/mp4" />
         </video>
         <div className={styles.container}>
