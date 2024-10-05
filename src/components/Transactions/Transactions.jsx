@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Transactions.module.css";
+import { CircularProgress } from "@mui/material";
 import { ReactComponent as FoodIcon } from "../../assets/samosa.svg";
 import { ReactComponent as DeleteIcon } from "../../assets/delete-icon.svg";
 import { ReactComponent as EditIcon } from "../../assets/edit-icon.svg";
@@ -8,7 +9,7 @@ import { ReactComponent as TravelIcon } from "../../assets/auto-icon.svg";
 import { ReactComponent as LeftArrow } from "../../assets/left-arrow.svg";
 import { ReactComponent as RightArrow } from "../../assets/right-arrow.svg";
 
-function Transactions({expenses, editModalStateHandler, deleteExpenseHandler}) {
+function Transactions({expenses, editModalStateHandler, deleteExpenseHandler, isLoading}) {
     const [startIndex, setStartIndex] = useState(0);
     const [endIndex, setEndIndex] = useState(3);
     const [pageCount, setPageCount] = useState(1);
@@ -54,7 +55,8 @@ function Transactions({expenses, editModalStateHandler, deleteExpenseHandler}) {
                         <div className={styles.priceButtons}>
                             <p>{`₹${expense.price}`}</p>
                             <div className={styles.icons}>
-                                <DeleteIcon onClick={() => deleteExpenseHandler(expense.id)} className="cursor-pointer" />
+                                {isLoading.loading && isLoading.id === expense.id? <div><CircularProgress sx={{color: '#FF3E3E'}} size={20} /></div>
+                                : <DeleteIcon onClick={() => deleteExpenseHandler(expense.id)} className="cursor-pointer" />}
                                 <EditIcon onClick={() => editModalStateHandler(expense, true)} className="cursor-pointer" />
                             </div>
                         </div>

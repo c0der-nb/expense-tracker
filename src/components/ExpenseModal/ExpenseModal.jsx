@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import TextField from '@mui/material/TextField';
 import styles from "./ExpenseModal.module.css";
-import { MenuItem } from "@mui/material";
+import { MenuItem, CircularProgress } from "@mui/material";
 
-function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHandler, cancelHandler}) {
+function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHandler, cancelHandler, isLoading}) {
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
@@ -59,7 +59,11 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                         <MenuItem value="Travel">Travel</MenuItem>
                     </TextField>
                     <TextField style={{width: '223px'}} onChange={(e) => setDate(e.target.value)} type="date" variant="outlined" id="date" required />
-                    <button type="submit" className={`${styles.addButton} cursor-pointer`}>Add Expense</button>
+                    {!isLoading.add ? <button type="submit" className={`${styles.addButton} cursor-pointer`}>Add Expense</button>
+                    : <div style={{"width": '13.9375rem', "text-align": 'center'}}>
+                        <CircularProgress sx={{ color: '#F4BB4A' }} size={25} />
+                      </div>
+                    }
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </form>
                 </div>
@@ -81,7 +85,11 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                         <MenuItem value="Travel">Travel</MenuItem>
                     </TextField>
                     <TextField style={{width: '223px'}} onChange={(e) => setDate(e.target.value)} type="date" variant="outlined" defaultValue={selectedExpense.date} id="date" required/>
-                    <button type="submit" className={`${styles.addButton} cursor-pointer`}>Update Expense</button>
+                    {!isLoading.edit ? <button type="submit" className={`${styles.addButton} cursor-pointer`}>Update Expense</button>
+                    : <div style={{"width": '13.9375rem', "text-align": 'center'}}>
+                        <CircularProgress sx={{ color: '#F4BB4A' }} size={25} />
+                      </div>
+                    }
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </form>
                 </div>

@@ -132,6 +132,21 @@
     align-items: center;
 }
 
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5.625rem;
+    column-gap: 0.2rem;
+}
+
+.icons div {
+    width: 43.4px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 0.5rem;
+}
+
 @media only screen and (max-width: 1226px) {
     .wrapper {
         width: 39.14rem;
