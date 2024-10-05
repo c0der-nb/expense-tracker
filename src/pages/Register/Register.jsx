@@ -77,7 +77,7 @@ function Register() {
                     : <div className={styles.spinner}><CircularProgress size={20} /></div>}
                 </div>
                 <div>
-                    <p>Already a user? <Link to='/login'><Button><b>Click here to login.</b></Button></Link></p>
+                    <p>Already a user? <Link to='/login'><Button><b>Click here to login</b></Button></Link></p>
                 </div>
             </form>
         </div>

@@ -77,7 +77,7 @@ function Login({ placeholder }) {
                         : <div className={styles.spinner}><CircularProgress size={20} /></div>}
                     </div>
                     <div>
-                        <p>Don't have an account? <Link to='/register'><Button className={styles.clickRegister}><b>Click here to register.</b></Button></Link></p>
+                        <p>Don't have an account? <Link to='/register'><Button className={styles.clickRegister}><b>Click here to register</b></Button></Link></p>
                     </div>
                 </form>
             </div>
