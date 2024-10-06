@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextField from '@mui/material/TextField';
-import { CircularProgress } from "@mui/material";
+import { LinearProgress } from "@mui/material";
 import styles from "./AddBalanceModal.module.css";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,7 @@ function AddBalanceModal({cancelHandler, updateWalletBalance}) {
                     <TextField style={{width:'217px'}} type="number" label="Income Amount" variant="outlined" onChange={(e) => setBalanceInput(e.target.value)} />
                     {!isLoading ? <button className={`${styles.addButton} cursor-pointer`} onClick={addBalanceHandler}>Add Balance</button>
                     :<div style={{"width": '9.0625rem', "text-align": 'center'}}>
-                        <CircularProgress sx={{ color: '#F4BB4A' }} size={25} />
+                        <LinearProgress color="inherit" sx={{ color: '#F4BB4A' }} size={25} />
                      </div>}
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
                 </div>

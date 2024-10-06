@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TextField from '@mui/material/TextField';
 import styles from "./ExpenseModal.module.css";
-import { MenuItem, CircularProgress } from "@mui/material";
+import { MenuItem, LinearProgress } from "@mui/material";
 
 function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHandler, cancelHandler, isLoading}) {
     const [title, setTitle] = useState("");
@@ -61,7 +61,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                     <TextField style={{width: '223px'}} onChange={(e) => setDate(e.target.value)} type="date" variant="outlined" id="date" required />
                     {!isLoading.add ? <button type="submit" className={`${styles.addButton} cursor-pointer`}>Add Expense</button>
                     : <div style={{"width": '13.9375rem', "text-align": 'center'}}>
-                        <CircularProgress sx={{ color: '#F4BB4A' }} size={25} />
+                        <LinearProgress color="inherit" sx={{ color: '#F4BB4A' }} size={25} />
                       </div>
                     }
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
@@ -87,7 +87,7 @@ function ExpenseModal({type, selectedExpense, addExpenseHandler, updateExpenseHa
                     <TextField style={{width: '223px'}} onChange={(e) => setDate(e.target.value)} type="date" variant="outlined" defaultValue={selectedExpense.date} id="date" required/>
                     {!isLoading.edit ? <button type="submit" className={`${styles.addButton} cursor-pointer`}>Update Expense</button>
                     : <div style={{"width": '13.9375rem', "text-align": 'center'}}>
-                        <CircularProgress sx={{ color: '#F4BB4A' }} size={25} />
+                        <LinearProgress color="inherit" sx={{ color: '#F4BB4A' }} size={25} />
                       </div>
                     }
                     <button className={`${styles.cancel} cursor-pointer`} onClick={cancelHandler}>Cancel</button>
