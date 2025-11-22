@@ -4,7 +4,7 @@ import { LinearProgress } from "@mui/material";
 import styles from "./AddBalanceModal.module.css";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
-import { config } from "../../App";
+import ApiService from '../../api/api';
 
 function AddBalanceModal({cancelHandler, updateWalletBalance}) {
     const [balanceInput, setBalanceInput] = useState("");
@@ -22,14 +22,7 @@ function AddBalanceModal({cancelHandler, updateWalletBalance}) {
     const addBalance = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`${config.endpoint}/user/wallet_balance`, {
-                method: 'POST',
-                body: JSON.stringify({wallet_balance: parseInt(balanceInput)}),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
+            const response = await ApiService.addWalletBalance(balanceInput);
             setLoading(false);
             if (response.status === 401) {
                 enqueueSnackbar("Session is expired. Please log in again.");

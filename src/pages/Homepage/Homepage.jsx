@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { enqueueSnackbar } from 'notistack';
 import styles from './Homepage.module.css';
 import Hero from '../../components/HeroSection/HeroSection';
 import Transactions from '../../components/Transactions/Transactions';
 import TopExpenses from '../../components/TopExpenses/TopExpenses';
-import ExpenseModal from '../../components/ExpenseModal/ExpenseModal';
-import AddBalanceModal from '../../components/AddBalanceModal/AddBalanceModal';
 import Header from '../../components/Header/Header';
-import { config } from '../../App';
+import ApiService from '../../api/api';
+
+const ExpenseModal = lazy(() => import('../../components/ExpenseModal/ExpenseModal'));
+const AddBalanceModal = lazy(() => import('../../components/AddBalanceModal/AddBalanceModal'));
+const DeleteExpenseConfirmModal = lazy(() => import('../../DeleteExpenseConfirmModal/DeleteExpenseConfirmModal'));
+
 
 function Homepage() {
     const [addModalActive, setAddModalActive] = useState(false);
     const [editModalActive, setEditModalActive] = useState(false);
     const [balanceModalActive, setBalanceModalActive] = useState(false);
+    const [confirmDeleteModalActive, setConfirmDeleteModalActive] = useState(false);
     const [expenses, setExpenses] = useState([]);
     const [totalExpenses, setTotalExpenses] = useState("");
     const [selectedExpense, setSelectedExpense] = useState({});
@@ -31,16 +35,21 @@ function Homepage() {
     })
 
     const addModalStateHandler = (isAddModalActive) => setAddModalActive(isAddModalActive);
+
     const editModalStateHandler = (expense, isEditModalActive) => {
         setSelectedExpense(expense);
         setEditModalActive(isEditModalActive);
     }
+
     const balanceModalStateHandler = (isBalanceModalActive) => setBalanceModalActive(isBalanceModalActive);
+
     const closeModal = () => {
         setAddModalActive(false);
         setEditModalActive(false);
         setBalanceModalActive(false);
+        setConfirmDeleteModalActive(false);
     }
+
     const addExpenseHandler = (expense) => {
         if (walletBalance <= 0 || parseInt(expense.price) > walletBalance)
             enqueueSnackbar("Expense can't be greater than your wallet balance.");
@@ -48,17 +57,11 @@ function Homepage() {
             saveExpense(expense);
         }
     }
+
     const saveExpense = async (expense) => {
         try {
             setLoadingAddEditExpense((prev) => ({...prev, add: true}))
-            const response = await fetch(`${config.endpoint}/expense`, {
-                method: 'POST',
-                body: JSON.stringify(expense),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            })
+            const response = await ApiService.addExpense(expense);
             const newExpense = await response.json();
             setLoadingAddEditExpense((prev) => ({...prev, add: false}))
             if (response.status === 401) {
@@ -77,6 +80,7 @@ function Homepage() {
             enqueueSnackbar("Server is not responding. Please try again later.")
         }
     }
+
     const updateExpenseHandler = (expense) => {
         if (walletBalance <= 0 || parseInt(expense.price) > walletBalance)
             enqueueSnackbar("Expense can't be greater than your wallet balance.");
@@ -84,17 +88,11 @@ function Homepage() {
             updateExpense(expense);
         }
     }
+
     const updateExpense = async (expense) => {
         try {
             setLoadingAddEditExpense((prev) => ({...prev, edit: true}));
-            const response = await fetch(`${config.endpoint}/expense/${expense.id}`, {
-                method: 'PUT',
-                body: JSON.stringify(expense),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
+            const response = await ApiService.updateExpense(expense.id, expense);
             setLoadingAddEditExpense((prev) => ({...prev, edit: false}))
             if (response.status === 401) {
                 enqueueSnackbar("Session expired. Please log in again.")
@@ -115,15 +113,17 @@ function Homepage() {
             enqueueSnackbar("Server is not responding. Please try again later.")
         }
     }
-    const deleteExpenseHandler = async (id) => {
+
+    const deleteExpenseHandler = (id) => {
+        setConfirmDeleteModalActive(true);
+        setDeleteLoading((prev) => ({...prev, id: id}));
+    }
+
+    const deleteExpense = async (id) => {
         try {
+            closeModal();
             setDeleteLoading({loading: true, id: id});
-            const response = await fetch(`${config.endpoint}/expense/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
+            const response = await ApiService.deleteExpense(id);
             setDeleteLoading({loading: false, id: id});
             if (response.status === 401) {
                 enqueueSnackbar("Session expired. Please log in again.")
@@ -150,12 +150,7 @@ function Homepage() {
     const getWalletBalance = async () => {
         try {
             setWalletLoading(true);
-            const token = localStorage.getItem('token')
-            const response = await fetch(`${config.endpoint}/user/wallet_balance`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
+            const response = await ApiService.getWalletBalance();
             const jsonResponse = await response.json();
             setWalletLoading(false);
             if (response.status === 401) {
@@ -180,13 +175,7 @@ function Homepage() {
     const getExpenses = async () => {
         try {
             setExpenseLoading(true);
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${config.endpoint}/expense`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-            })
+            const response = await ApiService.getAllExpenses();
             setExpenseLoading(false);
             if (response.status === 401) {
                 enqueueSnackbar("Session expired. Please log in again.")
@@ -231,9 +220,10 @@ function Homepage() {
                     isExpenseLoading={isExpenseLoading}
                 />
             </div>
-            {addModalActive && <ExpenseModal addExpenseHandler={addExpenseHandler} type="add" cancelHandler={closeModal} isLoading={isLoadingAddEditExpense} />}
-            {editModalActive && <ExpenseModal selectedExpense={selectedExpense} updateExpenseHandler={updateExpenseHandler} type="edit" cancelHandler={closeModal} isLoading={isLoadingAddEditExpense} />}
-            {balanceModalActive && <AddBalanceModal cancelHandler={closeModal} updateWalletBalance={updateWalletBalance} />}
+            {addModalActive && <Suspense fallback={<div>Loading...</div>}><ExpenseModal addExpenseHandler={addExpenseHandler} type="add" cancelHandler={closeModal} isLoading={isLoadingAddEditExpense} /></Suspense>}
+            {editModalActive && <Suspense fallback={<div>Loading...</div>}><ExpenseModal selectedExpense={selectedExpense} updateExpenseHandler={updateExpenseHandler} type="edit" cancelHandler={closeModal} isLoading={isLoadingAddEditExpense} /></Suspense>}
+            {balanceModalActive && <Suspense fallback={<div>Loading...</div>}><AddBalanceModal cancelHandler={closeModal} updateWalletBalance={updateWalletBalance} /></Suspense>}
+            {confirmDeleteModalActive && <Suspense fallback={<div>Loading...</div>}><DeleteExpenseConfirmModal id={isDeleteLoading.id} deleteExpenseHandler={(id) => {deleteExpense(id);}} cancelHandler={closeModal} /></Suspense>}
             <div className={styles.main}>
                 <div className={styles.transactions}>
                     <h4>Recent Transactions</h4>

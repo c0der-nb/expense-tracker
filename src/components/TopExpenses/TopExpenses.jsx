@@ -1,27 +1,21 @@
 import React from "react";
 import styles from "./TopExpenses.module.css";
+import { CATEGORY_LIST } from "../../constants/categories";
 
 function TopExpenses({data}) {
     let categorisedDataList = [];
-    let entertainmentList = data.filter((val) => val.category === "Entertainment");
-    let foodList = data.filter((val) => val.category === "Food");
-    let travelList = data.filter((val) => val.category === "Travel");
-    categorisedDataList.push(
-      {
-        category: "Entertainment",
-        value: entertainmentList.reduce((acc, cv) => acc + parseInt(cv.price),0)
-      },
-      {
-        category: "Food",
-        value: foodList.reduce((acc, cv) => acc + parseInt(cv.price),0)
-      },
-      {
-        category: "Travel",
-        value: travelList.reduce((acc, cv) => acc + parseInt(cv.price),0)
-      }
-    )
+    const categoryToListMap = new Map();
+    CATEGORY_LIST.forEach((category) => {
+      categoryToListMap.set(category, data.filter((val) => val.category === category));
+    });
+    categoryToListMap.forEach((value, key) => {
+      categorisedDataList.push({
+        category: key,
+        value: value.reduce((acc, cv) => acc + parseInt(cv.price),0)
+      })
+    })
     categorisedDataList.sort((a, b) => b.value - a.value);
-    const topExpense = categorisedDataList[0].value;
+    const topExpense = categorisedDataList[0]?.value;
     return (
         <div className={styles.wrapper}>
             {data.length > 0 ? categorisedDataList.map((val) => (

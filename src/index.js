@@ -38,7 +38,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <SnackbarProvider
-      maxSnack={3}
+      maxSnack={2}
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "center",

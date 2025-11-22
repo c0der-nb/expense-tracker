@@ -2,7 +2,7 @@ import './App.css';
 import { Outlet } from 'react-router-dom';
 
 export const config = {
-  endpoint: "https://expense-tracker-rest.onrender.com",
+  endpoint: "https://expense-tracker-rest.onrender.com"
 }
 
 function App() {

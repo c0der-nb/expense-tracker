@@ -1,17 +1,13 @@
 import React from 'react';
 import styles from './Header.module.css';
-import { config } from '../../App';
+import ApiService from '../../api/api';
+import { ReactComponent as UserIcon } from '../../assets/user-solid-full.svg';
 import { enqueueSnackbar } from 'notistack';
 
 function Header() {
     const logout = async () => {
         try {
-            const response = await fetch(`${config.endpoint}/auth/logout`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
+            const response = await ApiService.logout();
             if (response.status === 401) {
                 enqueueSnackbar('Session expire. Login again');
                 localStorage.clear();
@@ -33,6 +29,7 @@ function Header() {
         <div className={styles.wrapper}>
             <h3 className={styles.etHeading}><b>Expense Tracker</b></h3>
             <div>
+                <UserIcon />
                 <p>{localStorage.getItem('email')}</p>
                 <button className={styles.logoutButton} onClick={logout}>Logout</button>
             </div>

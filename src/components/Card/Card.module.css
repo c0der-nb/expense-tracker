@@ -49,6 +49,16 @@
     cursor: pointer;
 }
 
+.incomeButton:active {
+    transform: scale(0.98); /* Shrinks the button slightly */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adjust shadow for depth */
+}
+
+.incomeButton:hover {
+    cursor: pointer;
+    background: linear-gradient(90deg, #a6c844 0%, #78c03e 100%);
+}
+
 .expenseButton {
     font-family: Ubuntu;
     font-size: 16px;
@@ -63,4 +73,14 @@
     padding: 8px 16px 8px 16px;
     background: linear-gradient(90deg, #FF9595 0%, #FF4747 80%, #FF3838 100%);
     cursor: pointer;
+}
+
+.expenseButton:active {
+    transform: scale(0.98); /* Shrinks the button slightly */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adjust shadow for depth */
+}
+
+.expenseButton:hover {
+    cursor: pointer;
+    background: linear-gradient(90deg, #e08686 0%, #e03a3a 80%, #d73232 100%);
 }

@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import styles from './Register.module.css';
 import video from '../../assets/video.mp4';
-import { config } from '../../App';
+import ApiService from '../../api/api';
 
 function Register() {
     const [registerForm, setRegisterForm] = useState({
@@ -30,13 +30,7 @@ function Register() {
             return;
         try {
             setLoading(true);
-            const response = await fetch(`${config.endpoint}/user`, {
-                method: 'POST',
-                body: JSON.stringify(registerForm),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            const response = await ApiService.register(registerForm);
             const jsonResponse = await response.json();
             setLoading(false);
             if (response.status === 409) {
@@ -51,7 +45,6 @@ function Register() {
         }
         catch (ex) {
             setLoading(false);
-            console.log(ex);
             enqueueSnackbar("Server is not responding. Please try again later.")
         }
     } 

@@ -42,6 +42,16 @@
     cursor: pointer;
 }
 
+.logoutButton:active {
+    transform: scale(0.98); /* Shrinks the button slightly */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adjust shadow for depth */
+}
+
+.logoutButton:hover {
+    cursor: pointer;
+    background: linear-gradient(90deg, #e08686 0%, #e03a3a 80%, #d73232 100%);
+}
+
 @media only screen and (max-width: 572px) {
     .etHeading {
         font-size: 1rem;

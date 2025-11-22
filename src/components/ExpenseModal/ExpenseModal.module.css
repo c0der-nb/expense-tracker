@@ -75,6 +75,15 @@
     color: #FFFFFF;
 }
 
+.addButton:hover {
+    background: linear-gradient(0deg, #e0a93f, #e0a93f);
+}
+
+.addButton:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 .cancel {
     width: 7rem;
     height: 3.1875rem;
@@ -123,4 +132,13 @@
         line-height: 21.79px;
         color: #000000;
     }
+}
+
+.cancel:hover {
+    background: linear-gradient(0deg, #cfcfcf, #cfcfcf);
+}
+
+.cancel:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }

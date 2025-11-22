@@ -5,10 +5,10 @@ import { enqueueSnackbar } from 'notistack';
 import { TextField } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
-import { config } from '../../App';
 import video  from '../../assets/video.mp4';
+import ApiService from '../../api/api';
 
-function Login({ placeholder }) {
+function Login() {
     const navigate = useNavigate();
 
     const [loginForm, setLoginForm] = useState({
@@ -30,19 +30,13 @@ function Login({ placeholder }) {
             return;
         try {
             setIsLoading(true);
-            const res = await fetch(`${config.endpoint}/auth/login`, {
-                method: 'POST',
-                body: JSON.stringify(loginForm),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+            const res = await ApiService.login(loginForm);
             const resJson = await res.json();
             setIsLoading(false);
             if (res.status === 200) {
                 persistLoginInfo(resJson["Authorization"]);
                 enqueueSnackbar("Log in successful")
-                navigate("/homepage");
+                navigate("/");
             }
             if (res.status === 401) {
                 enqueueSnackbar("Invalid email or password")
